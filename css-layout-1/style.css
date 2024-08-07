@@ -1,0 +1,51 @@
+body{
+    background-color: azure;
+}
+
+p{
+color:red;
+font-size: 20px;
+}
+.special{
+    text-decoration: underline;
+}
+#vip{
+ font-weight: bold;
+ color: blueviolet;
+ background-color: yellow;
+}
+
+.textbox{
+    background-color: cornflowerblue;
+    border-style: dotted;
+    border-color: rgb(213, 249, 250);
+    border-width: 3px;
+
+    margin: 20px;
+    padding: 40px; 
+    padding-left: 40px;
+}
+
+#canvas-parent{
+    margin-bottom: 20px;
+}
+
+.one{
+    position: absolute;
+
+}
+
+.two{
+    position:fixed;
+    right:0px;
+    bottom:0px;
+}
+
+.three{
+    position: relative;
+    left: 50px;
+}
+
+.four{
+    display:none;
+}

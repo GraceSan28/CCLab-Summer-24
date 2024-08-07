@@ -111,6 +111,8 @@ class GraceDancer {
     fill(203, 255, 243);
     quad(-2,60,2,60,20,62,-20,62);
 
+    this.drawOlive();
+
     
 
     // ******** //
@@ -154,6 +156,7 @@ class GraceDancer {
     pop();
 
     this.drawLiquid();
+    
   }
 
   drawLiquid(){ //added this not sure 
@@ -167,6 +170,16 @@ class GraceDancer {
   
     triangle(this.x1,this.y1,this.x2,this.y2,this.x3,this.y3);
     pop();
+
+  }
+
+  drawOlive(){
+    push();
+    stroke(219, 244, 152);
+    fill(219, 244, 152);
+    ellipse(this.x,this.y,30,20);
+    fill(255,0,0);
+    ellipse(this.x+10,this.y,10,5);
 
   }
   drawReferenceShapes() {

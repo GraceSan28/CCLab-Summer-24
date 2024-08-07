@@ -1,0 +1,27 @@
+body{
+    background-color: azure;
+}
+
+#main{
+    background-color: darkkhaki;
+    width:900px;
+    margin:auto;
+}
+
+h1{
+    text-align: center;
+}
+
+#canvas-parent{
+    background-color: blueviolet;
+    text-align: center;
+}
+
+p{
+    background-color: darkseagreen;
+    width: 50%;
+    margin: auto;
+    margin-top:10px;
+    /* padding-left: 200px;
+    padding-right: 200px; */
+}
