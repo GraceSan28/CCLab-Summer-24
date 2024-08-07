@@ -1,3 +1,10 @@
+let bgm;
+
+let yaxm;
+let yaxmIMG;
+let yaxmText;
+let yaxmTextIMG;
+
 let floorplanIMG;
 let floorplan
 
@@ -50,10 +57,15 @@ let dish5Stay = false;
 let dish5;
 let dish5IMG;
 
-let grandma;
-let grandmaIMG;
+// let grandma;
+// let grandmaIMG;
 
 function preload() {
+  bgm=loadSound("assets/restaurantBGM.mp3");
+
+  yaxmIMG = loadImage("assets/character.PNG");
+  yaxmTextIMG=loadImage("assets/yaxmtextrestaurant.PNG")
+
   floorplanIMG = loadImage("assets/floorplan.PNG");
   counterIMG = loadImage("assets/order-counter.PNG");
   tableIMG = loadImage("assets/table.PNG");
@@ -84,24 +96,29 @@ function setup() {
   let cnv = createCanvas(windowWidth, windowHeight);
   cnv.parent("canvas-parent")
 
+  backgroundMusic();
+
   floorplan = new FloorPlan(width / 2, height / 2, floorplanIMG);
+
+  yaxm=new YaXm(450,50,yaxmIMG);
+  yaxmText=new YaXmText(610,10,yaxmTextIMG);
 
   counter = new Counter(775, 80, counterIMG);
   waiterText = new Text(1100, 25, waiterTextIMG);
 
-  table1 = new Table(300, 225, tableIMG);
-  table2 = new Table(300, 625, tableIMG);
-  table3 = new Table(1400, 225, tableIMG);
-  table4 = new Table(1400, 625, tableIMG);
+  table1 = new Table(477.5, 350, tableIMG);
+  table2 = new Table(477.5, 750, tableIMG);
+  table3 = new Table(1577.5, 350, tableIMG);
+  table4 = new Table(1577.5, 750, tableIMG);
 
-  chair1 = new Chair(200, 225, chairIMG);
-  chair2 = new Chair(625, 400, chairIMG);
-  chair3 = new Chair(200, 800, chairIMG);
-  chair4 = new Chair(630, 600, chairIMG);
-  chair5 = new Chair(1300, 400, chairIMG);
-  chair6 = new Chair(1750, 225, chairIMG);
-  chair7 = new Chair(1300, 600, chairIMG);
-  chair8 = new Chair(1750, 800, chairIMG);
+  chair1 = new Chair(250, 275, chairIMG);
+  chair2 = new Chair(675, 450, chairIMG);
+  chair3 = new Chair(250, 850, chairIMG);
+  chair4 = new Chair(680, 650, chairIMG);
+  chair5 = new Chair(1350, 450, chairIMG);
+  chair6 = new Chair(1800, 275, chairIMG);
+  chair7 = new Chair(1350, 650, chairIMG);
+  chair8 = new Chair(1800, 850, chairIMG);
 
   menuStand = new MenuStand(1100, 250, menuStandIMG);
 
@@ -114,28 +131,59 @@ function setup() {
   dish5 = new Dish(1630, 200, dish5IMG);
 }
 
+function backgroundMusic(){
+  bgm.play();
+  bgm.loop();
+  bgm.setVolume(0.03);
+  userStartAudio();
+}
 function draw() {
   clear(); // delete background
   background(200, 100, 100);
 
   floorplan.display();
 
+  yaxm.display();
+  yaxmText.display();
+
   counter.display();
   waiterText.display();
 
   table1.display();
+  table1.update();
+
   table2.display();
+  table2.update();
+
   table3.display();
+  table3.update();
+
   table4.display();
+  table4.update();
 
   chair1.display();
+  chair1.update();
+
   chair2.display();
+  chair2.update();
+
   chair3.display();
+  chair3.update();
+
   chair4.display();
+  chair4.update();
+
   chair5.display();
+  chair5.update();
+
   chair6.display();
+  chair6.update();
+
   chair7.display();
+  chair7.update();
+
   chair8.display();
+  chair8.update();
 
   menuStand.display();
 
@@ -276,6 +324,42 @@ class FloorPlan {
   }
 }
 
+class YaXm{
+  constructor(yaxmX,yaxmY,yaxmIMG){
+    this.x=yaxmX;
+    this.y=yaxmY;
+    this.photo=yaxmIMG;
+  }
+
+  display(){
+    push();
+    translate(this.x,this.y);
+    let imgW=this.photo.width;
+    let imgH=this.photo.height;
+
+    image(this.photo,0,0,imgW*0.9,imgH*0.9);
+    pop();
+  }
+}
+
+class YaXmText{
+  constructor(textX,textY,textIMG){
+    this.x=textX;
+    this.y=textY;
+    this.photo=textIMG;
+  }
+
+  display(){
+    push();
+    translate(this.x,this.y);
+    let imgW=this.photo.width;
+    let imgH=this.photo.height;
+
+    image(this.photo,0,0,imgW*0.12,imgH*0.12);
+    pop();
+  }
+}
+
 class Counter {
   constructor(counterX, counterY, counterIMG) {
     this.x = counterX;
@@ -331,15 +415,38 @@ class Table {
     this.y = tableY;
     this.photo = tableIMG;
   }
-
+  update(){
+    if(this.isDragged==true){
+      this.x=mouseX;
+      this.y=mouseY;
+    }
+  }
   display() {
     push();
     translate(this.x, this.y);
+
+    if (this.isDragged == true) {
+      fill("red")
+    } else {
+      fill("white")
+    }
+    //rect(-177.5, -125, 355, 250);
+
     let imgW = this.photo.width;
     let imgH = this.photo.height;
 
-    image(this.photo, 0, 0, imgW * 0.8, imgH * 0.8);
+    image(this.photo, -177.5, -125, imgW * 0.8, imgH * 0.8);
+
+    // fill("blue");
+    // circle(0, 0, 5);
     pop();
+  }
+  checkIfPressed() {
+    if (mouseX > this.x-177.5 && mouseX < this.x + 177.5 &&
+      mouseY > this.y-125 && mouseY < this.y + 125
+    ) {
+      this.isDragged = true;
+    }
   }
 }
 
@@ -369,21 +476,21 @@ class Chair {
     } else {
       fill("white")
     }
-    rect(0, 0, 110, 110);
+    //rect(-50, -50, 110, 110);
 
     let imgW = this.photo.width;
     let imgH = this.photo.height;
 
-    image(this.photo, 0, 0, imgW, imgH)
+    image(this.photo, -50, -50, imgW, imgH)
 
-    fill("blue");
-    circle(0, 0, 5);
+    // fill("blue");
+    // circle(0, 0, 5);
     pop();
   }
 
   checkIfPressed() {
-    if (mouseX > this.x && mouseX < this.x + 110 &&
-      mouseY > this.y && mouseY < this.y + 110
+    if (mouseX > this.x-50 && mouseX < this.x + 50 &&
+      mouseY > this.y-50 && mouseY < this.y + 50
     ) {
       this.isDragged = true;
     }
@@ -507,6 +614,10 @@ function mousePressed() {
  chair7.checkIfPressed();
  chair8.checkIfPressed();
 
+ table1.checkIfPressed();
+ table2.checkIfPressed();
+ table3.checkIfPressed();
+ table4.checkIfPressed();
 }
 
 function mouseReleased() {
@@ -520,6 +631,11 @@ function mouseReleased() {
   chair6.isDragged=false; 
   chair7.isDragged=false; 
   chair8.isDragged=false; 
+
+  table1.isDragged=false;
+  table2.isDragged=false;
+  table3.isDragged=false;
+  table4.isDragged=false;
 }
 
 

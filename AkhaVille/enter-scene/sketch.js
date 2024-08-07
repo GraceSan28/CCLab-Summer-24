@@ -1,5 +1,13 @@
+let bgm;
+
 let restaurant;
 let restaurantIMG;
+
+let yaxm;
+let yaxmIMG;
+let yaxmText;
+let yaxmTextIMG;
+
 
 let tree;
 let treeIMG;
@@ -18,6 +26,8 @@ let fruitIMG;
 let fruit1;
 let fruit2;
 let fruit3;
+let fruitbasket;
+let fruitbasketIMG;
 
 let bushIMG;
 let bush1;
@@ -57,22 +67,25 @@ let text8;
 let text8IMG;
 
 function preload() {
+  bgm = loadSound("assets/website_bgm.mp3");
+
   roadIMG = loadImage("assets/cobblestone.PNG");
   restaurantIMG = loadImage("assets/restaurant-exterior.PNG");
   treeIMG = loadImage("assets/tree.PNG");
   fruitIMG = loadImage("assets/fruit.PNG");
+  fruitbasketIMG = loadImage("assets/fruitbasket.PNG");
   bushIMG = loadImage("assets/bush.PNG");
   flowerIMG = loadImage("assets/flower.PNG");
 
   flowerSound1 = loadSound("assets/Hello.mp3");
   flowerSound2 = loadSound("assets/How are you.mp3");
   flowerSound3 = loadSound("assets/What are  you doing.mp3");
-  flowerSound4 = loadSound("assets/Let’s eat.mp3");
+  flowerSound4 = loadSound("assets/letseat.mp3");
   flowerSound5 = loadSound("assets/Where are you.mp3");
   flowerSound6 = loadSound("assets/Miss you.mp3");
   flowerSound7 = loadSound("assets/I love you.mp3")
   flowerSound8 = loadSound("assets/What’s your number.mp3")
- 
+
   text1IMG = loadImage("assets/hellotext.PNG");
   text2IMG = loadImage("assets/howareyoutext.PNG");
   text3IMG = loadImage("assets/whatareyoudoingtext.PNG");
@@ -81,6 +94,10 @@ function preload() {
   text6IMG = loadImage("assets/missyoutext.PNG");
   text7IMG = loadImage("assets/iloveyoutext.PNG");
   text8IMG = loadImage("assets/numbertext.PNG");
+
+  yaxmIMG = loadImage("assets/character.PNG");
+  yaxmTextIMG = loadImage("assets/yaxmtextoutside.PNG")
+  fruitSound = loadSound("assets/FruitPluck.mp3")
 }
 
 
@@ -88,6 +105,8 @@ function preload() {
 function setup() {
   let cnv = createCanvas(windowWidth, windowHeight);
   cnv.parent("canvas-parent");
+
+  backgroundMusic();
 
   for (let i = 0; i < numRoad; i++) {
     let oneRoad = new Road(width / 4, height / 2, roadIMG);
@@ -106,6 +125,7 @@ function setup() {
   fruit1 = new Fruit(1200, 175, fruitIMG);
   fruit2 = new Fruit(1250, 250, fruitIMG);
   fruit3 = new Fruit(1300, 175, fruitIMG);
+  fruitbasket = new Fruitbasket(1150, 350, fruitbasketIMG);
 
   bush1 = new Bush(40, 500, bushIMG);
   bush2 = new Bush(40, 700, bushIMG);
@@ -121,14 +141,24 @@ function setup() {
   flower7 = new Flower(1025, 800, flowerIMG);
   flower8 = new Flower(1125, 775, flowerIMG);
 
-  text1= new Text(80,450,text1IMG);
-  text2= new Text(220,430,text2IMG);
-  text3= new Text(70,650,text3IMG);
-  text4= new Text(200,650,text4IMG);
-  text5= new Text(800,430,text5IMG);
-  text6= new Text(920,450,text6IMG);
-  text7= new Text(930,660,text7IMG);
-  text8= new Text(1050,620,text8IMG);
+  text1 = new Text(80, 450, text1IMG);
+  text2 = new Text(220, 430, text2IMG);
+  text3 = new Text(70, 650, text3IMG);
+  text4 = new Text(200, 650, text4IMG);
+  text5 = new Text(800, 430, text5IMG);
+  text6 = new Text(920, 450, text6IMG);
+  text7 = new Text(930, 660, text7IMG);
+  text8 = new Text(1050, 620, text8IMG);
+
+  yaxm = new YaXm(500, 760, yaxmIMG);
+  yaxmText = new YaXmText(610, 600, yaxmTextIMG);
+}
+
+function backgroundMusic() {
+  bgm.play();
+  bgm.loop();
+  bgm.setVolume(0.1);
+  userStartAudio();
 }
 
 function draw() {
@@ -143,8 +173,12 @@ function draw() {
 
   restaurant.display();
 
+
+
   tree.display();
   tree.update();
+
+  fruitbasket.display();
 
   fruit1.update();
   fruit1.display();
@@ -152,6 +186,8 @@ function draw() {
   fruit2.display();
   fruit3.update();
   fruit3.display();
+
+
 
   bush1.display();
   bush2.display();
@@ -190,8 +226,46 @@ function draw() {
   text6.display();
   text7.display();
   text8.display();
+
+  yaxm.display();
+  yaxmText.display();
 }
 
+class YaXm {
+  constructor(yaxmX, yaxmY, yaxmIMG) {
+    this.x = yaxmX;
+    this.y = yaxmY;
+    this.photo = yaxmIMG;
+  }
+
+  display() {
+    push();
+    translate(this.x, this.y);
+    let imgW = this.photo.width;
+    let imgH = this.photo.height;
+
+    image(this.photo, 0, 0, imgW * 0.8, imgH * 0.8);
+    pop();
+  }
+}
+
+class YaXmText {
+  constructor(textX, textY, textIMG) {
+    this.x = textX;
+    this.y = textY;
+    this.photo = textIMG;
+  }
+
+  display() {
+    push();
+    translate(this.x, this.y);
+    let imgW = this.photo.width;
+    let imgH = this.photo.height;
+
+    image(this.photo, 0, 0, imgW * 0.085, imgH * 0.085);
+    pop();
+  }
+}
 class Road {
   constructor(roadX, roadY, roadIMG) {
     this.x = roadX;
@@ -269,6 +343,9 @@ class Fruit {
     let imgH = this.photo.height;
     scale(0.05);
     image(this.photo, -imgW / 2, -imgH / 2, imgW, imgH);
+
+    // fill("blue");
+    // circle(0, 0, 100);
     pop();
   }
 
@@ -280,11 +357,39 @@ class Fruit {
         this.isFalling = false;
       }
     }
+
+    //   if(this.isDragged==true){
+    //     this.x=mouseX;
+    //     this.y=mouseY;
+    //   }
   }
 
   isClicked(mx, my) {
     let d = dist(mx, my, this.x, this.y);
     return d < this.size / 2; //click detection
+  }
+  // checkIfPressed() {
+  //   if (mouseX > 1178 && mouseX < 1217 &&
+  //     mouseY > 380 && mouseY < 422 ) {
+  //     this.isDragged = true;
+  //   }
+  //}
+}
+
+class Fruitbasket {
+  constructor(basketX, basketY, fruitbasketIMG) {
+    this.x = basketX;
+    this.y = basketY;
+    this.photo = fruitbasketIMG;
+  }
+  display() {
+    push();
+    translate(this.x, this.y);
+    let imgW = this.photo.width;
+    let imgH = this.photo.height;
+    scale(1.2)
+    image(this.photo, 0, 0, imgW * 0.086, imgH * 0.05);
+    pop();
   }
 }
 
@@ -362,11 +467,11 @@ class Flower {
   }
 }
 
-class Text{
-  constructor(textX,textY,textIMG){
-    this.x=textX;
-    this.y=textY;
-    this.photo=textIMG;
+class Text {
+  constructor(textX, textY, textIMG) {
+    this.x = textX;
+    this.y = textY;
+    this.photo = textIMG;
   }
 
   display() {
@@ -375,7 +480,7 @@ class Text{
     let imgW = this.photo.width;
     let imgH = this.photo.height;
 
-    image(this.photo, 0, 0, imgW /17, imgH /17);
+    image(this.photo, 0, 0, imgW / 17, imgH / 17);
     pop();
   }
 }
@@ -385,18 +490,26 @@ function windowResized() {
 }
 
 function mousePressed() {
+  console.log("pressed");
   console.log(mouseX, mouseY);
 
   if (fruit1.isClicked(mouseX, mouseY)) {
     fruit1.isFalling = true;
-
+    fruitSound.play();
   }
   if (fruit2.isClicked(mouseX, mouseY)) {
     fruit2.isFalling = true;
+    fruitSound.play();
   }
+
   if (fruit3.isClicked(mouseX, mouseY)) {
     fruit3.isFalling = true;
+    fruitSound.play();
   }
+
+  // fruit1.checkIfPressed();
+  // fruit2.checkIfPressed();
+  // fruit3.checkIfPressed();
 
   if (flower1.isClicked(mouseX, mouseY)) {
     console.log("wefonew")
@@ -405,7 +518,7 @@ function mousePressed() {
   }
   if (flower2.isClicked(mouseX, mouseY)) {
     flowerSound2.play();
-   // text2.display();
+    // text2.display();
   }
   if (flower3.isClicked(mouseX, mouseY)) {
     flowerSound3.play();
@@ -418,11 +531,11 @@ function mousePressed() {
   }
   if (flower5.isClicked(mouseX, mouseY)) {
     flowerSound5.play();
-   // text5.display();
+    // text5.display();
   }
   if (flower6.isClicked(mouseX, mouseY)) {
     flowerSound6.play();
-  //  text6.display();
+    //  text6.display();
   }
   if (flower7.isClicked(mouseX, mouseY)) {
     flowerSound7.play();
@@ -430,7 +543,13 @@ function mousePressed() {
   }
   if (flower8.isClicked(mouseX, mouseY)) {
     flowerSound8.play();
-   // text8.display();
+    // text8.display();
   }
 }
+// function mouseReleased() {
+//   console.log("released")
 
+//   fruit1.isDragged=false;
+//   fruit2.isDragged=false;
+//   fruit3.isDragged=false;
+// }
