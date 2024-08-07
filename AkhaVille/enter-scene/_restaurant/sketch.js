@@ -57,6 +57,9 @@ let dish5Stay = false;
 let dish5;
 let dish5IMG;
 
+let meatStove;
+let meatStoveIMG;
+
 // let grandma;
 // let grandmaIMG;
 
@@ -85,7 +88,7 @@ function preload() {
   dish4Sound = loadSound("assets/Chilli.mp3");
   dish5Sound = loadSound("assets/Everything.mp3");
 
-  grandmaIMG = loadImage("assets/grandma.PNG")
+  meatStoveIMG=loadImage("assets/meat.PNG");
 
   waiterSound = loadSound("assets/Welcome what eat.mp3")
 
@@ -106,17 +109,19 @@ function setup() {
   counter = new Counter(775, 80, counterIMG);
   waiterText = new Text(1100, 25, waiterTextIMG);
 
+  meatStove=new MeatStove(1500,0,meatStoveIMG);
+
   table1 = new Table(477.5, 350, tableIMG);
   table2 = new Table(477.5, 750, tableIMG);
-  table3 = new Table(1577.5, 350, tableIMG);
+  table3 = new Table(1000, 650, tableIMG);
   table4 = new Table(1577.5, 750, tableIMG);
 
   chair1 = new Chair(250, 275, chairIMG);
   chair2 = new Chair(675, 450, chairIMG);
   chair3 = new Chair(250, 850, chairIMG);
   chair4 = new Chair(680, 650, chairIMG);
-  chair5 = new Chair(1350, 450, chairIMG);
-  chair6 = new Chair(1800, 275, chairIMG);
+  chair5 = new Chair(1000, 470, chairIMG);
+  chair6 = new Chair(1000, 820, chairIMG);
   chair7 = new Chair(1350, 650, chairIMG);
   chair8 = new Chair(1800, 850, chairIMG);
 
@@ -148,6 +153,8 @@ function draw() {
 
   counter.display();
   waiterText.display();
+
+  meatStove.display();
 
   table1.display();
   table1.update();
@@ -247,7 +254,7 @@ function draw() {
 
   //dishes appear
   if (mouseIsPressed) {
-    if (mouseX > 1380 && mouseX < 1590 &&
+    if (mouseX > 1376 && mouseX < 1390 &&
       mouseY > 200 && mouseY < 226) {
       push();
       dish1Stay = true;
@@ -255,7 +262,7 @@ function draw() {
         dish1Sound.play();
       }
       pop();
-    } else if (mouseX > 1380 && mouseX < 1590 &&
+    } else if (mouseX > 1376 && mouseX < 1390 &&
       mouseY > 252 && mouseY < 276) {
       push();
       dish1Stay = false;
@@ -264,7 +271,7 @@ function draw() {
         dish2Sound.play();
       }
       pop();
-    } else if (mouseX > 1380 && mouseX < 1590 &&
+    } else if (mouseX > 1376 && mouseX < 1390 &&
       mouseY > 303 && mouseY < 325) {
       push();
       dish2Stay = false;
@@ -273,7 +280,7 @@ function draw() {
         dish3Sound.play();
       }
       pop();
-    } else if (mouseX > 1380 && mouseX < 1590 &&
+    } else if (mouseX > 1376 && mouseX < 1390 &&
       mouseY > 345 && mouseY < 371) {
       push();
       dish3Stay = false;
@@ -282,7 +289,7 @@ function draw() {
         dish4Sound.play();
       }
       pop();
-    } else if (mouseX > 1380 && mouseX < 1590 &&
+    } else if (mouseX > 1376 && mouseX < 1390 &&
       mouseY > 392 && mouseY < 410) {
       push();
       dish4Stay = false;
@@ -356,6 +363,23 @@ class YaXmText{
     let imgH=this.photo.height;
 
     image(this.photo,0,0,imgW*0.12,imgH*0.12);
+    pop();
+  }
+}
+
+class MeatStove{
+  constructor(meatX,meatY,meatStoveIMG){
+    this.x=meatX;
+    this.y=meatY;
+    this.photo=meatStoveIMG;
+  }
+  display(){
+    push();
+    translate(this.x,this.y);
+    let imgW=this.photo.width;
+    let imgH=this.photo.height;
+
+    image(this.photo,0,0,imgW,imgH);
     pop();
   }
 }
