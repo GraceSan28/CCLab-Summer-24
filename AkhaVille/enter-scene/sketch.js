@@ -69,7 +69,7 @@ let text8IMG;
 function preload() {
   bgm = loadSound("assets/website_bgm.mp3");
 
-  roadIMG = loadImage("assets/cobblestone.PNG");
+  roadIMG = loadImage("assets/cobblestone.png");
   restaurantIMG = loadImage("assets/restaurant-exterior.PNG");
   treeIMG = loadImage("assets/tree.PNG");
   fruitIMG = loadImage("assets/fruit.PNG");
