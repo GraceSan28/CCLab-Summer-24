@@ -546,10 +546,10 @@ function mousePressed() {
     // text8.display();
   }
 }
-// function mouseReleased() {
-//   console.log("released")
+function mouseReleased() {
+  console.log("released")
 
-//   fruit1.isDragged=false;
-//   fruit2.isDragged=false;
-//   fruit3.isDragged=false;
-// }
+  fruit1.isDragged=false;
+  fruit2.isDragged=false;
+  fruit3.isDragged=false;
+}
