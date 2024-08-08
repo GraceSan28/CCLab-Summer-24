@@ -507,9 +507,9 @@ function mousePressed() {
     fruitSound.play();
   }
 
-  // fruit1.checkIfPressed();
-  // fruit2.checkIfPressed();
-  // fruit3.checkIfPressed();
+  fruit1.checkIfPressed();
+  fruit2.checkIfPressed();
+  fruit3.checkIfPressed();
 
   if (flower1.isClicked(mouseX, mouseY)) {
     console.log("wefonew")
